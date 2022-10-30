@@ -4,7 +4,9 @@
         define  recodire        0
         define  zesarux         0
         define  vertical        0
-        define  clones          0   ; 0= zxdos+,  1= buryak,  2= unoxt
+	ifndef clones	        
+	  define  clones          0   ; 0= zxdos+,  1= buryak,  2= unoxt, 3= unoxt2
+        endif
         output  firmware_strings.rom
       macro wreg  dir, dato
         rst     $28
@@ -475,7 +477,8 @@ star16  djnz    star18
         wreg    scan_code, $ed  ; $ed + 2 = kb set leds + numlock
         halt
         halt
-        wreg    scan_code, $02
+        ;wreg    scan_code, $02
+        wreg    scan_code, $00 ; numlock off
         halt
         halt
       IF  vertical=0
@@ -2390,8 +2393,12 @@ saba    sub     'N'
        IF clones=1
         sub     'B'-'N'
        ELSE
-        sub     'T'-'N'
-       ENDIF
+		 IF clones=2
+		   sub     'T'-'N'
+		 ELSE
+		   sub		'2'-'N'
+		 ENDIF	
+	   ENDIF
       ENDIF
     ELSE
       IF version<3
@@ -2496,7 +2503,11 @@ sabe    pop     bc
        IF clones=1
         sub     'B'-'N'
        ELSE
-        sub     'T'-'N'
+		 IF clones=2
+		   sub     'T'-'N'
+		 ELSE
+		   sub		'2'-'N'
+		 ENDIF	
        ENDIF
       ENDIF
     ELSE
@@ -4530,8 +4541,12 @@ finav
            IF clones=1
             incbin  logo256x192bn.rcs.zx7b
            ELSE
-            incbin  logo256x192ut.rcs.zx7b
-           ENDIF
+			IF clones=2
+				incbin  logo256x192ut.rcs.zx7b
+			ELSE
+				incbin  logo256x192xt2.rcs.zx7b
+			ENDIF
+		   ENDIF
           ENDIF
          ENDIF
         ENDIF

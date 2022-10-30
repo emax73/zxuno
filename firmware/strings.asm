@@ -331,11 +331,18 @@ fileco  defb    'CORE    ZXD'
         defb    'SPECTRUMZXB'
 fileco  defb    'CORE    ZXB'
        ELSE
-        defb    'FIRMWAREZXT'
-        defb    'FLASH   ZXT'
-        defb    'SPECTRUMZXT'
-fileco  defb    'CORE    ZXT'
-       ENDIF
+	    IF clones=2
+		 defb    'FIRMWAREZXT'
+		 defb    'FLASH   ZXT'
+         defb    'SPECTRUMZXT'
+fileco   defb    'CORE    ZXT'
+        ELSE
+		 defb    'FIRMWAREXT2'
+		 defb    'FLASH   XT2'
+         defb    'SPECTRUMXT2'
+fileco   defb    'CORE    XT2'
+		ENDIF
+	   ENDIF
       ENDIF
     ELSE
       IF version<3
